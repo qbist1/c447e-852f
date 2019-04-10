@@ -27,7 +27,6 @@ public class Controller
     	// After you dumped all users from the API, sort the records in alphabetical order based on each person's first_name.
     	
     	// Implementation starts below
-    	
     	usersdoc element = new usersdoc();
     	if (!element.execute()) { return new ResponseEntity<JSONObject>(element.as_error(), HttpStatus.OK); }
     	if (!element.sort("first_name")) { return new ResponseEntity<JSONObject>(element.as_error(), HttpStatus.OK); }

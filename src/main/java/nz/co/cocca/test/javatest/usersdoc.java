@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 public class usersdoc 
 {
+	/*---------------------------------------------------------------------------------------------------------------------------------------------------*/
 	public String err;
 	public String key;
 	public String url = "https://reqres.in/api/users";
