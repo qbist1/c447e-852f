@@ -42,7 +42,7 @@ public class usersdoc
 	{
 		if (this.executed == false) { return this.error("The object needs to be executed before data can be sorted"); }
 		if (this.buffer.isEmpty()) { return this.error("There is no data to sort here"); }
-		if (this.buffer.get(0).has(sort_key)) { return this.error("Invalid sort key requested"); }
+		if (!this.buffer.get(0).has(sort_key)) { return this.error("Invalid sort key requested"); }
 		return (!this.bsort(sort_key)) ? false : true;
 	}
 	/*---------------------------------------------------------------------------------------------------------------------------------------------------*/
@@ -84,6 +84,7 @@ public class usersdoc
 				this.buffer.add(nodes.getJSONObject(index));
 				this.index = nodes.getJSONObject(index).getInt("id") + 1;
 			}
+			this.executed = true;
 			return this.traverse();
 		}
 		catch (Exception e) { return this.error(e.getMessage()); }
@@ -146,13 +147,16 @@ public class usersdoc
     		URL url_object = new URL(url_string);
     		StringBuilder buffer = new StringBuilder();
     		URLConnection connection = url_object.openConnection();
+    		//this is a weird fix
+    		connection.addRequestProperty("User-Agent", "Mozilla/4.0");
+    		//
     		BufferedReader data_object = new BufferedReader(new InputStreamReader(connection.getInputStream()));
     		while ((pointer = data_object.readLine()) != null) { buffer.append(pointer); }
     		return buffer.toString();
     	} 
     	catch (Exception e) 
     	{ 
-    		this.err = e.toString();
+    		this.error(e.toString());
     		return ""; 
     	}
     }
