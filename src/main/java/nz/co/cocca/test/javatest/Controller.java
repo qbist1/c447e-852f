@@ -1,14 +1,23 @@
 package nz.co.cocca.test.javatest;
 
+import org.springframework.http.MediaType;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-public class Controller {
 
-    @RequestMapping("/users")
+@RestController
+public class Controller 
+{
+
+	/*---------------------------------------------------------------------------------------------------------------------------------------------------*/
+	public String error_message;
+	/*---------------------------------------------------------------------------------------------------------------------------------------------------*/
+	//@RequestMapping("/users")
+    @RequestMapping(value="/users", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> listAllUsers() {
     	
     	// Requirement:
@@ -18,6 +27,10 @@ public class Controller {
     	// After you dumped all users from the API, sort the records in alphabetical order based on each person's first_name.
     	
     	// Implementation starts below
-    	return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    	usersdoc element = new usersdoc();
+    	if (!element.execute()) { return new ResponseEntity<JSONObject>(element.as_error(), HttpStatus.OK); }
+    	if (!element.sort("first_name")) { return new ResponseEntity<JSONObject>(element.as_error(), HttpStatus.OK); }
+    	return new ResponseEntity<JSONArray>(element.as_object(), HttpStatus.OK);
     }
+    /*---------------------------------------------------------------------------------------------------------------------------------------------------*/
 }
