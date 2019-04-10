@@ -1,7 +1,5 @@
 package nz.co.cocca.test.javatest;
 
-import java.util.SortedMap;
-import java.util.TreeMap;
 import java.util.ArrayList;
 import java.util.List;
 
